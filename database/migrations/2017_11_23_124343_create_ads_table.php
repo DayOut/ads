@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Ad;
 
 class CreateAdsTable extends Migration
 {
@@ -16,9 +17,10 @@ class CreateAdsTable extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
+            $table->integer('author_id');
             $table->string('author_name');
-            $table->dateTime('created_at');
+            $table->timestamps();
         });
     }
 
