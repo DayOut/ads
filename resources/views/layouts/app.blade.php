@@ -50,36 +50,113 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                        {{--@if (Auth::guest())--}}
+                            {{--<li><a href="{{ url('/login') }}">Login</a></li>--}}
+                            {{--<li><a href="{{ url('/register') }}">Register</a></li>--}}
+                        {{--@else--}}
+                            {{--<li class="dropdown">--}}
+                                {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">--}}
+                                    {{--{{ Auth::user()->name }} <span class="caret"></span>--}}
+                                {{--</a>--}}
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                                {{--<ul class="dropdown-menu" role="menu">--}}
+                                    {{--<li>--}}
+                                        {{--<a href="{{ url('/logout') }}"--}}
+                                            {{--onclick="event.preventDefault();--}}
+                                                     {{--document.getElementById('logout-form').submit();">--}}
+                                            {{--Logout--}}
+                                        {{--</a>--}}
 
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
+                                        {{--<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">--}}
+                                            {{--{{ csrf_field() }}--}}
+                                        {{--</form>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
+                            {{--</li>--}}
+                        {{--@endif--}}
                     </ul>
                 </div>
             </div>
         </nav>
 
-        @yield('content')
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+
+        <div class="container">
+            <div class="row">
+
+                @yield('content')
+
+                <div class="col-md-2 ">
+                    <div class="panel panel-default">
+                        @if (Auth::guest())
+                            <div class="panel-body">
+                                <form name="authorization" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                                    {{ csrf_field() }}
+
+                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <div class="col-md-12">
+                                            <label for="name" class="control-label">Name</label>
+                                            <input id="email" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+                                            @if ($errors->has('name'))
+                                                <span class="help-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <div class="col-md-12">
+                                            <label for="password" class="control-label">Password</label>
+                                            <input id="password" type="password" class="form-control" name="password" required>
+
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary btn-block">
+                                                Login
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-md-12">
+                                    <a href="{{ url('/register') }}" class="btn btn-block">Register</a></li>
+                                </div>
+                            </div>
+                        @else
+                            <div class="panel-heading ">Hello, <strong>{{ Auth::user()->name }}</strong></div>
+                            <div class="panel-body">
+
+                                <a href="{{ url('/edit') }}" class="btn btn-success btn-block">Create ad</a></li>
+                                <a href="{{ url('/logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="btn btn-primary btn-block">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+
+
+
+                            </div>
+                        @endif
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <!-- Scripts -->
