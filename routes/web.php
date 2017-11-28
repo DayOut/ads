@@ -38,6 +38,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/{id}', function ($id) {
 
+
         return view('view_ad', [
             'advert' => Ad::where('id', $id)->get(),
 
@@ -64,8 +65,11 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::get('/edit', function () {
 
+        $advert = array(new Ad);
+        $advert[0]->title = "";
+        $advert[0]->description = "";
         return view('edit', [
-            'advert' => null,
+            'advert' => $advert,
         ]);
     });
 
@@ -73,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Edit advertise
      */
     Route::get('/edit/{id}', function ($id) {
+
 
         return view('edit', [
             'advert' => Ad::where('id', $id)->get(),
